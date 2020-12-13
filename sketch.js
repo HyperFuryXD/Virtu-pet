@@ -1,5 +1,8 @@
 //Create variables here
 var dog,happyDog,database,foodS,foodStock,dogImg2;
+var addFood,feedPet;
+var fedTime,lastFed;
+var foodObj;
 
 function preload()
 {
@@ -10,7 +13,17 @@ function preload()
 
 function setup() {
  database=firebase.database();
-  createCanvas(500, 500);
+  createCanvas(1000,800);
+
+  feedPet = createButton("Feed the dog");
+  feedPet.position(700,95);
+  feedPet.mousePressed(feedDog);
+
+  addFood = createButton("Replenish food");
+  addFood.position(800,95);
+  addFood.mousePressed(addFoods);
+
+
   dog = createSprite(250,250,70,70);
   dog.addImage(happyDog);
   dog.scale = 0.5;
@@ -26,6 +39,13 @@ background(46,139,87);
 if(keyWentDown(UP_ARROW)){
   writeStock(foodS);
   dog.addImage(dogImg2);
+}
+
+fill(255,255,254);
+textSize(15);
+
+if(lastFed>+12){
+  text
 }
 
   drawSprites();
