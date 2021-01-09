@@ -1,5 +1,6 @@
 //Create variables here
 var dog,happyDog,database,foodS,foodStock,dogImg2;
+var milk;
 var addFood,feedPet;
 var fedTime,lastFed;
 var foodObj;
@@ -30,6 +31,8 @@ function setup() {
 
   foodStock=database.ref('food');
   foodStock.on("value",readStock);
+
+  milk = new Food();
 }
 
 
@@ -37,15 +40,21 @@ function draw() {
 background(46,139,87);
 
 if(keyWentDown(UP_ARROW)){
-  writeStock(foodS);
+  writeStock(foodStock);
   dog.addImage(dogImg2);
 }
+
+milk.display();
 
 fill(255,255,254);
 textSize(15);
 
 if(lastFed>+12){
-  text
+  text("Last Feed :"+lastFed%12+"PM",350,30)
+}else if(lastFed===0){
+text("Last Feed : 12 AM",350,30);
+}else{
+  text("Last Feed :"+lastFed+"AM",350,30);
 }
 
   drawSprites();
@@ -61,6 +70,23 @@ function writeStock(x){
   database.ref('/').update({
     food:x
   })
+}
+
+function feedDog(){
+  dog.addImage(dogImg2);
+  foodObj.updateFoodStock(foodObj.getFoodStock()-1);
+  database.ref('/').update({
+    Food:foodObj.getFoodStock(),
+    FeedTime:hour()
+  })
+}
+
+function addFoods(){
+  foodStock++;
+  database.ref('/').update({
+    Food:foodStock
+  })
+
 }
 
 
